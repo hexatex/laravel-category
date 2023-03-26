@@ -2,9 +2,9 @@
 
 namespace Hexatex\LaravelCategory\Tests;
 
+use Hexatex\LaravelCategory\LaravelCategoryServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Hexatex\LaravelCategory\LaravelCategoryServiceProvider;
 
 class TestCase extends Orchestra
 {
