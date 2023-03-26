@@ -11,6 +11,6 @@ class LaravelCategory extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return \Hexatex\LaravelCategory\LaravelCategory::class;
+        return \Hexatex\LaravelCategory\CategoryService::class;
     }
 }

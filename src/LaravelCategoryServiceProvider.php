@@ -22,4 +22,18 @@ class LaravelCategoryServiceProvider extends PackageServiceProvider
             ->hasMigration('create_laravel-category_table')
             ->hasCommand(LaravelCategoryCommand::class);
     }
+
+    public function boot(): void
+    {
+        App::bind('LaravelCategory', function()
+        {
+            return new \Hexatex\LaravelCategory\CategoryService;
+        });
+
+        LaravelCategory::setCategoryTypes([
+            // Todo: should I be defining model and service here, or have service class defined on the CategoryType interface
+            'regular' => \Hexatex\LaravelCategory\CategoryType\Regular::class,
+            'dynamic' => \Hexatex\LaravelCategory\CategoryType\Dynamic::class,
+        ]);
+    }
 }
