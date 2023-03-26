@@ -3,6 +3,10 @@
 namespace Hexatex\LaravelCategory;
 
 use Hexatex\LaravelCategory\Commands\LaravelCategoryCommand;
+use Hexatex\LaravelCategory\CategoryType\Regular;
+use Hexatex\LaravelCategory\CategoryType\RegularService;
+use Hexatex\LaravelCategory\CategoryType\Dynamic;
+use Hexatex\LaravelCategory\CategoryType\DynamicService;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -30,10 +34,9 @@ class LaravelCategoryServiceProvider extends PackageServiceProvider
             return new \Hexatex\LaravelCategory\CategoryService;
         });
 
-        LaravelCategory::setCategoryTypes([
-            // Todo: should I be defining model and service here, or have service class defined on the CategoryType interface
-            'regular' => \Hexatex\LaravelCategory\CategoryType\Regular::class,
-            'dynamic' => \Hexatex\LaravelCategory\CategoryType\Dynamic::class,
+        LaravelCategory::setCategoryTypes([ // Configure using morph map key and CategoryServiceClass class
+            'category_regular' => RegularService::class,
+            'category_dynamic' => DynamicService::class,
         ]);
     }
 }

@@ -12,6 +12,9 @@ class CategoryService
     /** @var string[] */
     private $categoryTypes = [];
 
+    /** @var CategoryTypeService[] */
+    private $categoryTypeServices = [];
+
     /**
      * @param string[] $categoryTypes
      */
@@ -21,7 +24,10 @@ class CategoryService
         // Todo: use this array to call store, update destroy on the category type services from this services store update destroy methods
     }
 
-    public function index(array $filters, Category $parent = null): LengthAwarePaginator|Category[]
+    /**
+     * @return Category[]|LengthAwarePaginator
+     */
+    public function index(array $filters, Category $parent = null): LengthAwarePaginator
     {
         return Category::filter($filters)
             ->byParent($parent)
@@ -50,14 +56,13 @@ class CategoryService
         return $categories;
     }
 
-    public function store(array $fill, CategoryType $categoryType): Category
+    public function store(array $fill): Category
     {
+        $categoryType = $this->categoryTypeService($category)->store($fill['categoryType']);
+
         $category = new Category($fill);
         $category->categoryType()->associate($categoryType);
-        $category->iconImage()->associate($fill['icon_image']['id'] ?? null);
-        $category->bannerImage()->associate($fill['banner_image']['id'] ?? null);
         $category->menuImage()->associate($fill['menu_image']['id'] ?? null);
-        $category->menuBImage()->associate($fill['menu_b_image']['id'] ?? null);
         $category->save();
 
         $menuIds = collect($fill['menus'])->pluck('id');
@@ -69,11 +74,10 @@ class CategoryService
     public function update(array $fill, Category $category): void
     {
         $category->fill($fill);
-        $category->iconImage()->associate($fill['icon_image']['id'] ?? null);
-        $category->bannerImage()->associate($fill['banner_image']['id'] ?? null);
         $category->menuImage()->associate($fill['menu_image']['id'] ?? null);
-        $category->menuBImage()->associate($fill['menu_b_image']['id'] ?? null);
         $category->save();
+
+        $this->categoryTypeService($category)->update($fill['categoryType'], $category->categoryType);
 
         $menuIds = collect($fill['menus'])->pluck('id');
         $category->menus()->sync($menuIds);
@@ -86,6 +90,8 @@ class CategoryService
     public function destroy(Category $category): void
     {
         $category->delete();
+
+        $this->categoryTypeService($category)->destroy($category->categoryType);
     }
 
     public function addProducts(array $fills, Category $category): void
@@ -129,7 +135,7 @@ class CategoryService
                 ->where('b.category_id', $category->id)
                 ->where('a.product_id', '!=', $product->id)
                 ->where('a.display_order', '>=', DB::raw('b.display_order'))
-                ->update(['a.display_order' => \DB::raw('a.display_order + 1')]);
+                ->update(['a.display_order' => DB::raw('a.display_order + 1')]);
         } else { // after
             \DB::table('category_product as a')
                 ->join('category_product as b', function (JoinClause $join) use ($neighbor) {
@@ -139,7 +145,24 @@ class CategoryService
                 ->where('b.category_id', $category->id)
                 ->where('a.product_id', '!=', $product->id)
                 ->where('a.display_order', '<=', DB::raw('b.display_order'))
-                ->update(['a.display_order' => \DB::raw('a.display_order - 1')]);
+                ->update(['a.display_order' => DB::raw('a.display_order - 1')]);
         }
+   }
+
+   /*
+    * Private Methods
+    */
+   /**
+    * Get the service for the category type, configure in LaravelCategoryServiceProvider with LaravelCategory::setCategoryTypes
+    */
+   private function categoryTypeService(Category $category): CategoryTypeService
+   {
+        $serviceClass = $this->categoryTypes[$category->category_type_type];
+
+        if (empty($this->categoryTypeServices[$serviceClass])) {
+            $this->categoryTypeServices[$serviceClass] = app($serviceClass);
+        }
+
+        return $this->categoryTypeServices[$serviceClass];
    }
 }
