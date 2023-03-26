@@ -2,9 +2,9 @@
 
 namespace Hexatex\LaravelCategory;
 
+use Hexatex\LaravelCategory\Commands\LaravelCategoryCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Hexatex\LaravelCategory\Commands\LaravelCategoryCommand;
 
 class LaravelCategoryServiceProvider extends PackageServiceProvider
 {
