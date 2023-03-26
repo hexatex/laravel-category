@@ -3,8 +3,6 @@
 namespace Hexatex\LaravelCategory\CategoryType;
 
 use Hexatex\LaravelCategory\Category;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
@@ -16,12 +14,14 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property-read \Hexatex\LaravelCategory\Category $category
  * @property-read string $display_name
  * @property-read string $url
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Regular newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Regular newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Regular query()
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Regular whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Regular whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Regular whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Regular extends CategoryType implements CategoryType
@@ -36,6 +36,7 @@ class Regular extends CategoryType implements CategoryType
      */
     /**
      * Category
+     *
      * @return MorphOne
      */
     public function category()

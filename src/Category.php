@@ -2,15 +2,15 @@
 
 namespace Hexatex\LaravelCategory;
 
-use Hexatex\LaravelCategory\CategoryType\CategoryType;
 use Hexatex\LaravelBreadcrumbs\Breadcrumbable;
-use Hexatex\LaravelSlug\Slugable;
+use Hexatex\LaravelCategory\CategoryType\CategoryType;
 use Hexatex\LaravelFacet\Facet;
 use Hexatex\LaravelFacet\Facetable;
+use Hexatex\LaravelFiltered\Traits\Filtered;
 use Hexatex\LaravelImage\Image;
 use Hexatex\LaravelMenu\Menu;
-use Hexatex\LaravelFiltered\Traits\Filtered;
 use Hexatex\LaravelSlug\HasSlug;
+use Hexatex\LaravelSlug\Slugable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,6 +47,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
      */
     /**
      * Display name
+     *
      * @return string
      */
     public function getDisplayNameAttribute()
@@ -56,15 +57,17 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
 
     /**
      * Url
+     *
      * @return string
      */
     public function getUrlAttribute()
     {
-        return '/' . $this->getSlug();
+        return '/'.$this->getSlug();
     }
 
     /**
      * Get Breadcrumbable breadcrumb
+     *
      * @return Breadcrumbable
      */
     public function getBreadcrumb()
@@ -78,6 +81,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
      */
     /**
      * Return the models Url slug (auto or from slug column)
+     *
      * @return string
      */
     public function getSlug()
@@ -90,6 +94,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
      */
     /**
      * Facets for Facet search
+     *
      * @return HasMany
      */
     public function facets()
@@ -97,7 +102,6 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
         // Todo: this needs to be polymorphic
         return $this->hasMany(Facet::class);
     }
-
 
     /*
      * Scopes
@@ -119,6 +123,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
      */
     /**
      * Implements CategoryType
+     *
      * @return MorphTo
      */
     public function categoryType()
@@ -128,6 +133,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
 
     /**
      * Parent Category
+     *
      * @return BelongsTo
      */
     public function parent()
@@ -137,6 +143,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
 
     /**
      * Child Categories
+     *
      * @return HasMany
      */
     public function children()
@@ -146,6 +153,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
 
     /**
      * CategoryItems
+     *
      * @return BelongsToMany
      */
     public function categoryItems()
@@ -161,6 +169,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
 
     /**
      * Menu Image
+     *
      * @return BelongsTo
      */
     public function menuImage()
@@ -170,6 +179,7 @@ class Category extends Model implements Breadcrumbable, Slugable, Facetable
 
     /**
      * MenusItems assigning the Category to Menus
+     *
      * @return HasMany
      */
     public function menuItems()

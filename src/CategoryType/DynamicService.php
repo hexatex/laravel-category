@@ -2,12 +2,10 @@
 
 namespace Hexatex\LaravelCategory\CategoryType;
 
-use Hexatex\LaravelCategory\Jobs\Category\SyncDynamicItems;
-use Hexatex\LaravelCategory\Category;
-use Hexatex\LaravelCategory\CategoryType\Dynamic;
-use Hexatex\LaravelCategory\CategoryService;
-use Hexatex\LaravelCriteria\CriteriaService;
 use Hexatex\LaravelCategory\CategoryItemService;
+use Hexatex\LaravelCategory\CategoryService;
+use Hexatex\LaravelCategory\Jobs\Category\SyncDynamicItems;
+use Hexatex\LaravelCriteria\CriteriaService;
 
 class DynamicService implements CategoryTypeService
 {
@@ -39,6 +37,7 @@ class DynamicService implements CategoryTypeService
 
     /**
      * Destroy
+     *
      * @throws \Exception
      */
     public function destroy(Dynamic $dynamic): void

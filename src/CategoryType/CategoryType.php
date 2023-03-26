@@ -14,6 +14,7 @@ interface CategoryType
 {
     /**
      * Category
+     *
      * @return MorphOne
      */
     public function category();

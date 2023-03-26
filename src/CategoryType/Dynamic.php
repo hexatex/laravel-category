@@ -3,12 +3,10 @@
 namespace Hexatex\LaravelCategory\CategoryType;
 
 use Hexatex\LaravelCategory\Category;
-use Hexatex\LaravelCriteria\Criteriable;
 use Hexatex\LaravelCriteria\Criteria;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Hexatex\LaravelCriteria\Criteriable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * Hexatex\LaravelCategory\CategoryType\Dynamic
@@ -20,12 +18,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \Hexatex\LaravelCriteria\Criteria $criteria
  * @property-read string $display_name
  * @property-read string $url
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Dynamic newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Dynamic newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Dynamic query()
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Dynamic whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Dynamic whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Hexatex\LaravelCategory\CategoryType\Dynamic whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Dynamic extends Model implements CategoryType, Criteriable, CategoryType
@@ -38,6 +38,7 @@ class Dynamic extends Model implements CategoryType, Criteriable, CategoryType
      */
     /**
      * Category
+     *
      * @return MorphOne
      */
     public function category()
@@ -50,6 +51,7 @@ class Dynamic extends Model implements CategoryType, Criteriable, CategoryType
      */
     /**
      * Criteria
+     *
      * @return MorphOne
      */
     public function criteria()

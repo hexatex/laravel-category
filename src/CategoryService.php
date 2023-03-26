@@ -16,7 +16,7 @@ class CategoryService
     private $categoryTypeServices = [];
 
     /**
-     * @param string[] $categoryTypes
+     * @param  string[]  $categoryTypes
      */
     public function setCategoryTypes(array $categoryTypes): void
     {
@@ -36,6 +36,7 @@ class CategoryService
 
     /**
      * Return array of Category recursive hierarchy
+     *
      * @return array [[id, name],]
      */
     public function indexHierarchy(string $search): array
@@ -47,9 +48,9 @@ class CategoryService
             $xmlPath = new SimpleXMLElement($fill->rxmlpath);
 
             foreach ($xmlPath->children() as $child) {
-                $categoryId = (int)$child->id;
+                $categoryId = (int) $child->id;
                 $categories[$categoryId] = $categories[$categoryId]
-                    ?? ['id' => $categoryId, 'name' => (string)$child->name];
+                    ?? ['id' => $categoryId, 'name' => (string) $child->name];
             }
         }
 
@@ -85,6 +86,7 @@ class CategoryService
 
     /**
      * Destroy
+     *
      * @throws \Exception
      */
     public function destroy(Category $category): void
@@ -147,22 +149,22 @@ class CategoryService
                 ->where('a.display_order', '<=', DB::raw('b.display_order'))
                 ->update(['a.display_order' => DB::raw('a.display_order - 1')]);
         }
-   }
+    }
 
    /*
-    * Private Methods
-    */
+     * Private Methods
+     */
    /**
     * Get the service for the category type, configure in LaravelCategoryServiceProvider with LaravelCategory::setCategoryTypes
     */
    private function categoryTypeService(Category $category): CategoryTypeService
    {
-        $serviceClass = $this->categoryTypes[$category->category_type_type];
+       $serviceClass = $this->categoryTypes[$category->category_type_type];
 
-        if (empty($this->categoryTypeServices[$serviceClass])) {
-            $this->categoryTypeServices[$serviceClass] = app($serviceClass);
-        }
+       if (empty($this->categoryTypeServices[$serviceClass])) {
+           $this->categoryTypeServices[$serviceClass] = app($serviceClass);
+       }
 
-        return $this->categoryTypeServices[$serviceClass];
+       return $this->categoryTypeServices[$serviceClass];
    }
 }

@@ -2,11 +2,9 @@
 
 namespace Hexatex\LaravelCategory;
 
-use Hexatex\LaravelCategory\Commands\LaravelCategoryCommand;
-use Hexatex\LaravelCategory\CategoryType\Regular;
-use Hexatex\LaravelCategory\CategoryType\RegularService;
-use Hexatex\LaravelCategory\CategoryType\Dynamic;
 use Hexatex\LaravelCategory\CategoryType\DynamicService;
+use Hexatex\LaravelCategory\CategoryType\RegularService;
+use Hexatex\LaravelCategory\Commands\LaravelCategoryCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -29,8 +27,7 @@ class LaravelCategoryServiceProvider extends PackageServiceProvider
 
     public function boot(): void
     {
-        App::bind('LaravelCategory', function()
-        {
+        App::bind('LaravelCategory', function () {
             return new \Hexatex\LaravelCategory\CategoryService;
         });
 
