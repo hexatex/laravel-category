@@ -1,0 +1,74 @@
+{
+    "name": "hexatex/laravel-category",
+    "description": "Add the ability to assign models to Categories.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Cory Baumer",
+            "email": "cory.j.baumer@gmail.com",
+            "homepage": "https://github.com/hexatex"
+        }
+    ],
+    "homepage": "https://github.com/hexatex/laravel-category",
+    "keywords": [
+        "Laravel",
+        "LaravelCategory"
+    ],
+    "require": {
+        "illuminate/support": "~9",
+        "laravel/passport": "^11.9",
+        "spatie/laravel-permission": "^5.11"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~9.0",
+        "orchestra/testbench": "~7",
+        "nunomaduro/collision": "^6.2",
+        "brianium/paratest": "^6.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Hexatex\\LaravelCategory\\": "src/",
+            "Hexatex\\LaravelImage\\": "../laravel-image/src/",
+            "Hexatex\\LaravelService\\": "../laravel-service/src/",
+            "Hexatex\\PhpMisc\\": "../php-misc/src/",
+            "Hexatex\\LaravelUser\\": "../laravel-user/src/",
+            "Hexatex\\LaravelFiltered\\": "../laravel-filtered/src/",
+            "Hexatex\\LaravelValidation\\": "../laravel-validation/src/",
+            "Hexatex\\LaravelMisc\\": "../laravel-misc/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Hexatex\\LaravelCategory\\Tests\\": "tests",
+            "Hexatex\\LaravelUser\\Factories\\": "../laravel-user/database/factories/",
+            "Hexatex\\LaravelCategory\\Factories\\": "database/factories/",
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hexatex\\LaravelCategory\\LaravelCategoryServiceProvider"
+            ],
+            "aliases": []
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "@build",
+            "@php vendor/bin/testbench serve"
+        ],
+        "test": [
+            "@php vendor/bin/phpunit"
+        ]
+    }
+}
